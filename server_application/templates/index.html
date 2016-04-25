@@ -1,0 +1,132 @@
+{% extends "base_template.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="dashboard" onload="loadDashboard()">
+    <div class="col-md-7 col-xs-12 dash-box dash-large blue" style="max-height: 370px;">
+        {% if data.object_names|length > 0 %}
+        <label>Events Log</label><br/>
+        <select name="select_list" onchange="changeGraphData(this)">
+            {% for object_name in data.object_names %}
+            <option>{{ object_name }}</option>
+            {% endfor %}
+        </select>
+        <!--<div class="ct-chart ct-perfect-fourth" style="max-height: 300px"></div>-->
+        <div style="max-height: 300px">
+            <canvas id="canvas" style="width: 100%"></canvas>
+        </div>
+        {% else %}
+        <div style="text-align: center;">
+            <h1>No Trackers Found!</h1>
+            <br />
+            <br />
+            <br />
+            <h4><a href="/trackers/new/">Create Tracker</a></h4>
+            <br />
+        </div>
+        {% endif%}
+    </div>
+    <div class="col-md-4 col-xs-12 dash-group">
+        <div class="col-md-12 dash-box dash-small green">
+            <div class="dash-header">
+                <h4>Alerts</h4>
+            </div>
+            <div class="dash-body">
+                <a href="/alerts/"><h4>{{ data.alerts_count }}</h4></a>
+            </div>
+        </div>
+        <div class="col-md-12 dash-box dash-medium yellow">
+            <div class="dash-header">
+                <h4>Recent Activity</h4>
+            </div>
+            <div class="dash-body">
+                <ul>
+                    {% for event in data.cache %}
+                    <li><a href="/trackers/profile/{{ event.object_name.lower().replace(' ', '_') }}">
+                            <span class="dash-body-header">
+                                {{ event.object_name }}
+                            </span>
+                            <span class="dash-body-body">
+                                {{ event.timestamp.strftime("%m/%d/%y - %H:%M:%S") }}
+                            </span>
+                    </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="infobox col-md-4 col-sm-6 col-xs-12">
+    <div class="infobox-part infobox-left col-xs-5">
+        Img
+    </div>
+    <div class="infobox-part infobox-right col-xs-7">
+        Stat
+    </div>
+</div>
+<div class="infobox col-md-4 col-sm-6 col-xs-12">
+    <div class="infobox-part infobox-left col-xs-5">
+        Img
+    </div>
+    <div class="infobox-part infobox-right col-xs-7">
+        Stat
+    </div>
+</div>
+<div class="infobox col-md-4 col-sm-6 col-xs-12">
+    <div class="infobox-part infobox-left col-xs-5">
+        Img
+    </div>
+    <div class="infobox-part infobox-right col-xs-7">
+        Stat
+    </div>
+</div>
+<div id="graphdiv" class="col-xs-8"></div>-->
+
+
+<script>
+
+var first_line_labels = []
+{% for label in data.graph_labels %}
+    first_line_labels.push("{{ label }}")
+{% endfor %}
+
+var line_data = {
+    // A labels array that can contain any sort of values
+    labels: first_line_labels,
+    // Our series array that contains series objects or in this case series data arrays
+    datasets: [
+        {
+            fillColor: "rgba(176,23,31,0)",
+            strokeColor: "rgba(176,23,31,1)",
+            pointColor: "rgba(176,23,31,1)",
+            data: [{{ data.graph_values|join(",") }}]
+        }
+    ]
+};
+
+var graph_options = {
+    pointDotRadius: 5,
+    bezierCurve: false,
+    scaleShowVerticalLines: false,
+    datasetStroke : true,
+    datasetStrokeWidth : 4,
+    scaleBackdropPaddingY : 5,
+    scaleBeginAtZero: true
+}
+
+
+
+var graphChart = document.getElementById('canvas').getContext('2d');
+var LineChart = new Chart(graphChart).Line(line_data, graph_options);
+
+
+</script>
+
+{% endblock %}

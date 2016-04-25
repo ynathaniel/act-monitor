@@ -1,0 +1,100 @@
+{% extends "base_template.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/alerts.js') }}"></script>
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<!-- alert rules table -->
+<div style="margin: 20px 0px;" class="col-md-12 col-xs-12 dash-box" id="rules">
+    {% if data.rules|length > 0 %}
+        <h3 style="margin: 4px; padding: 8px 0px;">Rules</h3>
+        {% if data.tracker_data|length > 5 %}
+            <button class="btn btn-primary" name="prev-btn" onclick="get_previous_r_page()" disabled>Previous Page</button>
+            <button class="btn btn-primary" name="next-btn" onclick="get_next_r_page()" style="float: right;">Next Page</button>
+        {% endif %}
+
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Rule Name</th>
+                <th>Tracker Name</th>
+                <th>Tracker Column</th>
+                <th>Tracker Value</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set r_row_count = 1 %}
+        {% set r_max_rows = 5 %}
+        {% for row in data.rules if r_row_count < r_max_rows %}
+            {% set r_row_count = r_row_count + 1 %}
+            <tr row_id="{{ loop.index0 }}">
+                <td col_id="name">{{ row["name"] }}</td>
+                <td col_id="object_name">
+                    <a href="/trackers/profile/{{ row['object_name'].lower().replace(' ', '_') }}">{{ row["object_name"] }}</a>
+                </td>
+                <td col_id="column_name">{{ row["column_name"] }}</td>
+                <td col_id="column_value">{{ row["column_value"] }}</td>
+                <td col_id="_id" class="remove-mark" onclick="deleteRule(this, {{ row['_id'] }})">&times</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h3 style="text-align: center; margin: 20px 0px;">No alert rules have been created</h3>
+    {% endif %}
+</div>
+
+<!-- alert data table -->
+<div style="margin: 20px 0px;" class="col-md-12 col-xs-12 dash-box" id="findings">
+    {% if data.alerts|length > 0 %}
+        <h3 style="margin: 4px; padding: 8px 0px;">Findings</h3>
+        {% if data.alerts|length > 5 %}
+            <button class="btn btn-primary" name="prev-btn" onclick="get_previous_f_page()" disabled>Previous Page</button>
+            <button class="btn btn-primary" name="next-btn" onclick="get_next_f_page()" style="float: right;">Next Page</button>
+        {% endif %}
+
+    <table style="width: 100%;">
+        <thead>
+
+            <tr>
+                <th>Rule Name</th>
+                <th>Tracker Name</th>
+                <th>Tracker Column</th>
+                <th>Tracker Value</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set f_row_count = 1 %}
+        {% set f_max_rows = 5 %}
+        {% for row in data.alerts if f_row_count < f_max_rows %}
+            {% set f_row_count = f_row_count + 1 %}
+            <tr row_id="{{ loop.index0 }}">
+                <td col_id="rule_name">{{ row["rule_name"] }}</td>
+                <td col_id="object_name">
+                    <a href="/trackers/profile/{{ row['object_name'].lower().replace(' ', '_') }}">{{ row["object_name"] }}</a>
+                </td>
+                <td col_id="column_name">{{ row["column_name"] }}</td>
+                <td col_id="found_value">{{ row["found_value"] }}</td>
+                <td col_id="_id" class="remove-mark" onclick="deleteRow(this, {{ row['_id'] }})">&#10003;</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h3 style="text-align: center; margin: 20px 0px;">No alerts have been found in the system</h3>
+    {% endif %}
+</div>
+
+
+<script>
+    var page_limit = 5
+
+
+</script>
+
+{% endblock %}

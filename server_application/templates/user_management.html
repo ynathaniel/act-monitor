@@ -1,0 +1,55 @@
+{% extends "base_template.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/user_management.js') }}"></script>
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<div style="padding-bottom: 20px;">
+    <button onclick="openNewUserForm()">Create User</button>
+</div>
+<div class="col-md-12 col-xs-12 dash-box">
+    <table style="width: 100%;">
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Is Admin</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            {% set count = 0 %}
+            {% for item in data.users %}
+                {% set count = count + 1 %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.is_admin }}</td>
+                    <td class="col-md1 col-xs-6">
+                        <span class="remove-mark" onclick="deleteUser(this, '{{ item.email }}')">&times</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="form-popup" class="popup col-md-5 col-xs-9" style="display: none;">
+    <h2 style="margin-top: 0px;">Create New User</h2>
+    <div id="user-creation-form">
+        <input type="text" name="name" placeholder="Name" />
+        <input type="email" name="email" placeholder="Email *" />
+        <input type="password" name="password" placeholder="Password *" />
+        <label style="margin-bottom: 50px;">
+            <input type="checkbox" name="is_admin" />
+            Admin
+        </label>
+    </div>
+
+    <div class="btn-options">
+        <button onclick="closeNewUserForm()">Cancel</button>
+        <button onclick="submitNewUserForm()">Ok</button>
+    </div>
+</div>
+{% endblock %}

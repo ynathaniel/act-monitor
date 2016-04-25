@@ -1,0 +1,39 @@
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+    <title>ActMonitor | Login</title>
+</head>
+<body>
+
+<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4" style="position: fixed; top: 20%; padding: 30px 30px 60px 30px; background-color: #182023; border-radius: 10px;">
+    <div class="left-bar logo" style="margin-bottom: 40px;">
+        <h2>ActMonitor</h2>
+    </div>
+    <div style="text-align:center;">
+        <input type="email" name="email" placeholder="email" style="padding: 5px;"/>
+        <input type="password" name="password" placeholder="password" style="padding: 5px;"/>
+    </div>
+    <div style="text-align:center;">
+        <button onclick="attemptLogin()" style="margin-top: 20px; padding: 6px 14px;">Login</button>
+    </div>
+</div>
+<div class="popup col-md-5 col-xs-9" style="display: none; min-height: 100px;">
+    <span></span>
+    <br />
+    <br />
+    <div class="btn-options" style="height: 40px; margin-bottom 50px;">
+        <button onclick="closePopup()">Ok</button>
+    </div>
+    <br />
+    <br />
+</div>
+</body>
+</html>

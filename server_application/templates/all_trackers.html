@@ -1,0 +1,38 @@
+{% extends "base_template.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/all_trackers.js') }}"></script>
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-md-12 col-xs-12 dash-box">
+    <a href="/trackers/new/"><button class="btn btn-primary" style="float: right; margin-right: 30px;">New Tracker</button></a>
+    <table style="width: 100%;">
+        <thead>
+            <th>Name</th>
+            <th>API Name</th>
+            <th>Events Tracked</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+            {% set count = 0 %}
+            {% for item in data.trackers %}
+                {% set count = count + 1 %}
+                <tr>
+                    <td><a href="/trackers/profile/{{ item.api }}">{{ item.name }}</a></td>
+                    <td>{{ item.api }}</td>
+                    <td>{{ item.count }}</td>
+                    <td class="col-md1 col-xs-6">
+                        <span class="remove-mark" onclick="removeTracker(this, '{{ item.name }}')">&times</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

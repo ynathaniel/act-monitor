@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        {{ data.name }} | API Monitor
+    </title>
+
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" type="text/css">
+    <script src="{{ url_for('static', filename='js/base_template.js') }}"></script>
+    {% endblock %}
+
+</head>
+<body onload="activate_nav_item()">
+<div id="main-body" class="wrapper col-md-12 col-sm-12 col-xs-12">
+    {% block body %}
+    <div id="main-body-left" class="body-part col-md-3 col-xs-4">
+        {% block navbar %}
+        <div class="left-bar logo">
+            <h2>ActMonitor</h2>
+        </div>
+        <hr style="background-color: #c5d0db; color: #c5d0db; height: 1px; width: 80px; border: 1px solid #FFF; border-radius:10px"/>
+        <ul class="left-bar nav-list">
+            <a href="/">
+                <li name="Dashboard" class="nav-item">
+                    Dashboard
+                </li>
+            </a>
+            <li class="nav-group" onmouseover="open_submenu(this)" onmouseout="close_submenu(this)">
+                <span class="nav-group-title">Trackers</span>
+                <i class="fa fa-angle-down fa-lg" style="color: #fff; float: right; padding: 3px 20% 0px 0px;"></i>
+
+                <ul class="left-bar nav-list hidden-item">
+                    <a href="/trackers/">
+                        <li name="All Trackers" class="nav-item">All Trackers</li>
+                    </a>
+                    <a href="/trackers/new/">
+                        <li name="New Tracker" class="nav-item">New Tracker</li>
+                    </a>
+                </ul>
+            </li>
+            <a href="/alerts/">
+                <li name="Alerts" class="nav-item">
+                    Alerts
+                </li>
+            </a>
+            <a href="/user-management/">
+                <li name="User Management" class="nav-item">
+                    User Management
+                </li>
+            </a>
+        </ul>
+        <hr style="background-color: #c5d0db; color: #c5d0db; height: 1px; width: 80px; border: 1px solid #FFF; border-radius:10px"/>
+        <div class="left-bar">
+            <h4>By Yoav Nathaniel</h4>
+        </div>
+        {% endblock %}
+    </div>
+    <div id="main-body-right" class="body-part col-md-9 col-xs-8">
+        <div style="height: auto;">
+            <h2 style="display: inline-block;">{{ data.name }}</h2>
+            <div style="display: inline-block; float: right; margin: 10px 20px 0px 0px;">
+                {{ data.user_name }}&nbsp;&nbsp;&nbsp;<a href="/logout/" style="">Logout</a>
+            </div>
+        </div>
+        <hr style="border: 1px solid #182023;"/>
+        {% block content %}{% endblock %}
+    </div>
+    {% endblock %}
+
+    <div id="alert-popup" class="popup col-md-5 col-xs-9" style="display: none;">
+        <span></span>
+        <div class="btn-options">
+            <button onclick="closePopup()">Ok</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

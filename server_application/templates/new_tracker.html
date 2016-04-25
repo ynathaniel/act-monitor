@@ -1,0 +1,59 @@
+{% extends "base_template.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/new_tracker.js') }}"></script>
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-md-9 col-xs-12 dash-box">
+    <!--<form method="post" action="/api/tracking/create">-->
+    <div class="form-data">
+        <input type="text" name="tracker_name" placeholder="Tracker Name" />
+        <!--
+        <div class="form-row" row-id="0">
+            <div class="col-md-4 col-xs-6">
+                <input type="text" name="tracker_name" placeholder="Tracker Name"/>
+            </div>
+
+
+            <div class="col-md-3 col-xs-6">
+                <select name="tracker_name_type" disabled>
+                    <option>Boolean</option>
+                    <option>DateTime</option>
+                    <option>Integer</option>
+                    <option>Float</option>
+                    <option selected="selected">String</option>
+                    <option>Unicode</option>
+                    <option>ARRAY(Integer)</option>
+                    <option>ARRAY(String)</option>
+                    <option>ARRAY(Unicode)</option>
+                    <option>JSON</option>
+                </select>
+            </div>
+            <div class="col-md-4 col-xs-6">
+                <div class="form-part">
+                    Can be null: <input type="checkbox" name="tracker_name_nullable" disabled/>
+                </div>
+                <div class="form-part">
+                    Is Unique: <input type="checkbox" name="tracker_name_unique" checked disabled/>
+                </div>
+            </div>
+            <div class="col-md-1 col-xs-6">
+            </div>
+
+        </div>
+        -->
+    </div>
+
+    <div class="form-row">
+        <button onclick="addEmptyFormRow()">Add Property</button>
+        <button onclick="createNewTracker()">Create Tracker</button>
+    </div>
+
+
+</div>
+
+{% endblock %}

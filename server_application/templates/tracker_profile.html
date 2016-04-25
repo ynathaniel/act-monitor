@@ -1,0 +1,109 @@
+{% extends "base_template.html" %}
+
+
+{% block head %}
+<script src="{{ url_for('static', filename='js/tracker_profile.js') }}"></script>
+{{ super() }}
+
+<style>
+    .input-spacing {
+        margin: 20px auto 0px auto;
+        display: block;
+        width: 250px;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-12 col-xs-12 dash-box" style="min-height: 200px;">
+    <div class="code-snippet col-md-9 col-xs-12">
+        <h4 style="margin: 9px 0px;">Request Structure</h4>
+        <pre>var url = "{{ data.url }}";
+
+var method = "POST";
+
+var insert_data = {{ data.json_module.dumps(data.example_columns, indent=4) }};</pre>
+    </div>
+    <div class="col-md-3 col-xs-12" style="display: table; min-height: inherit;">
+        <div style="vertical-align: middle; display: table-cell;">
+            <button onclick="openNewAlertForm()" style="width: 100%; padding: 10px 0px; margin-bottom: 15px;">Create Alert</button>
+            <button onclick="sendExampleRequest()" style="width: 100%; padding: 10px 0px;">Sample Request</button>
+        </div>
+    </div>
+</div>
+<div style="margin: 20px 0px;" class="col-md-12 col-xs-12 dash-box">
+    {% if data.tracker_data|length > 0 %}
+        {% if data.tracker_data|length > 5 %}
+            <button class="btn btn-primary" name="prev-btn" onclick="get_previous_page()" disabled>Previous Page</button>
+            <button class="btn btn-primary" name="next-btn" onclick="get_next_page()" style="float: right;">Next Page</button>
+        {% endif %}
+
+    <table style="width: 100%;">
+        <thead>
+            <tr>
+                {% for column_name in data.columns %}
+                    {% if column_name != "_id" %}
+                        <th>{{ column_name.title().replace("_", " ") }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set row_count = 1 %}
+        {% set max_rows = 5 %}
+        {% for row in data.tracker_data if row_count < max_rows %}
+            {% set row_count = row_count + 1 %}
+            <tr row_id="{{ loop.index0 }}">
+                {% for item in row %}
+                    {% if item != "_id" %}
+                        <td col_id="{{ item }}">{{ row[item] }} </td>
+                    {% endif %}
+                {% endfor %}
+                <td col_id="_id" class="remove-mark" onclick="deleteRow(this, {{ row['_id'] }})">&times</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <h3 style="text-align: center; margin: 20px 0px;">No Data Has Been Inserted to This Tracker</h3>
+    {% endif %}
+</div>
+
+<div id="form-popup" class="popup col-md-5 col-xs-9" style="display: none; min-height: 300px;">
+    <h2 style="margin-top: 0px;">Create New Alert</h2>
+    <div id="alert-creation-form" style="text-align: center;">
+        <input type="text" name="alert_name" class="input-spacing" placeholder="Alert Name" />
+        <select name="alert_column" class="input-spacing" onchange="changeGraphData(this)">
+            {% for object_name in data.example_columns %}
+                <option value="{{ object_name }}">{{ object_name }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="alert_value" class="input-spacing" placeholder="Value" />
+    </div>
+
+    <div class="btn-options">
+        <button onclick="closeNewAlertForm()">Cancel</button>
+
+        <button onclick="submitNewAlertForm()">Ok</button>
+    </div>
+</div>
+
+
+<script>
+    var object_name = "{{ data.name }}"
+    var page_limit = 5
+
+    var select_columns = []
+    var column_types = {}
+    {% for key in data.columns %}
+    select_columns.push("{{ key }}")
+    column_types.{{ key }} = "{{ data.columns[key] }}"
+    {% endfor %}
+
+
+</script>
+
+{% endblock %}
