@@ -1,3 +1,5 @@
+import ActMonitor.server_application.views
+
 if __name__ == "__main__":
     db_manager = ActMonitor.server_application.views.start_backend()
     ActMonitor.server_application.views.stop_backend(db_manager)

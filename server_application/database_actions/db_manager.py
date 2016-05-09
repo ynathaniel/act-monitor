@@ -2,8 +2,12 @@ from datetime import datetime
 from threading import Event
 from time import sleep
 
+from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import CreateSchema
 
+from ActMonitor.server_application.database_actions import CONN_URL, DB_SCHEMA, DEFAULT_OBJECT_NAMES, \
+    USER_MANAGEMENT_OBJECT_NAME, USER_MANAGEMENT_PROPERTIES, DYNAMIC_API_OBJECT_NAME, DYNAMIC_API_PROPERTIES, \
+    ALERT_RULES_OBJECT_NAME, ALERT_RULES_PROPERTIES, ALERT_FINDS_OBJECT_NAME, ALERT_FINDS_PROPERTIES
 from db_pool import DBPool
 from db_task import DBTask
 from db_utils import DBUtils

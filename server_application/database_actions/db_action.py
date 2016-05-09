@@ -6,7 +6,8 @@ from sqlalchemy import *
 from sqlalchemy import types
 from sqlalchemy.orm import mapper
 
-from ActMonitor.server_application import DB_SCHEMA, DYNAMIC_API_OBJECT_NAME, ALERT_RULES_OBJECT_NAME, ALERT_FINDS_OBJECT_NAME, DEFAULT_OBJECT_NAMES
+from ActMonitor.server_application.database_actions import DB_SCHEMA, DYNAMIC_API_OBJECT_NAME, ALERT_RULES_OBJECT_NAME, \
+    ALERT_FINDS_OBJECT_NAME, DEFAULT_OBJECT_NAMES
 from db_task import DBTask
 from template_dynamic_object import TemplateDynamicObject
 
