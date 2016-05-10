@@ -5,6 +5,21 @@ var row_id_count = 1
 var property_type_list = [ "Boolean", "DateTime", "Integer", "Float", "String", "Unicode"]
 var added_form_rows = {}
 
+
+/*
+NAME
+    addEmptyFormRow - Add a new empty row to the new tracker form
+Synopsis
+    addEmptyFormRow()
+DESCRIPTION
+    Adds another row to the new tracker form
+RETURNS
+    null
+AUTHOR
+    Yoav Nathaniel
+DATE
+    5/9/2016
+*/
 function addEmptyFormRow() {
     var name_input = $("<input />")
                 .attr("type", "text")
@@ -65,6 +80,22 @@ function addEmptyFormRow() {
     row_id_count += 1
 }
 
+/*
+NAME
+    removeFormRow - Delete a row from the new tracker form
+Synopsis
+    removeFormRow(row_id)
+        row_id      -> id of the form row to delete
+DESCRIPTION
+    removes the html row
+    removes the row from the recorded rows
+RETURNS
+    null
+AUTHOR
+    Yoav Nathaniel
+DATE
+    5/9/2016
+*/
 function removeFormRow(row_id) {
     if (row_id in added_form_rows) {
         $(added_form_rows[row_id]).remove()
@@ -72,6 +103,30 @@ function removeFormRow(row_id) {
     }
 }
 
+/*
+NAME
+    gather_all_inputs - Gathers the inputs of all the fields in the new tracker form
+Synopsis
+    gather_all_inputs()
+DESCRIPTION
+    Gathers the tracker name and all of its properties from the UI
+    If a required input field is missing, open popup with error
+RETURNS
+    data_found  -> object containing tracker name and its properties
+    {
+        name: TRACKER NAME,
+        properties: [
+            name: PROPERTY NAME,
+            type: PROPERTY TYPE,
+            nullable: BOOLEAN,
+            unique: BOOLEAN
+        ]
+    }
+AUTHOR
+    Yoav Nathaniel
+DATE
+    5/9/2016
+*/
 function gather_all_inputs() {
     if ($("[name='tracker_name']").val() == "") {
         alert("Tracker name is empty!")
@@ -108,6 +163,30 @@ function gather_all_inputs() {
     return data_found
 }
 
+/*
+NAME
+    createNewTracker - Submits the new tracker form
+Synopsis
+    createNewTracker()
+DESCRIPTION
+    Calls gather_all_inputs() to gather the form data. If found a problem, don't submit form.
+    Request server to create tracker, if successful, redirect to All Trackers page
+RETURNS
+    data_found  -> object containing tracker name and its properties
+    {
+        name: TRACKER NAME,
+        properties: [
+            name: PROPERTY NAME,
+            type: PROPERTY TYPE,
+            nullable: BOOLEAN,
+            unique: BOOLEAN
+        ]
+    }
+AUTHOR
+    Yoav Nathaniel
+DATE
+    5/9/2016
+*/
 function createNewTracker() {
     all_inputs = gather_all_inputs()
     if (all_inputs == null) {

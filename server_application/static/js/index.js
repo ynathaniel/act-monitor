@@ -1,3 +1,19 @@
+
+/*
+NAME
+    changeGraphData - Fetch graph data for some tracker
+Synopsis
+    changeGraphData(elem)
+        elem        -> the html element of the drop-down input
+DESCRIPTION
+    Fetches graph data for a tracker and replaces the content of the graph with the new data
+RETURNS
+    null
+AUTHOR
+    Yoav Nathaniel
+DATE
+    5/9/2016
+*/
 function changeGraphData(elem) {
     var object_name = $(elem).val()
     var graph_data_url = "/api/dashboard/graph?object_name=" + object_name

@@ -23,7 +23,7 @@
                 <th>Tracker Name</th>
                 <th>Tracker Column</th>
                 <th>Tracker Value</th>
-                <th>Delete</th>
+                <!-- <th>Delete</th> -->
             </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@
                 </td>
                 <td col_id="column_name">{{ row["column_name"] }}</td>
                 <td col_id="column_value">{{ row["column_value"] }}</td>
-                <td col_id="_id" class="remove-mark" onclick="deleteRule(this, {{ row['_id'] }})">&times</td>
+                <!-- <td col_id="_id" class="remove-mark" onclick="deleteRule(this, {{ row['_id'] }})">&times</td> -->
             </tr>
         {% endfor %}
         </tbody>
@@ -65,7 +65,7 @@
                 <th>Tracker Name</th>
                 <th>Tracker Column</th>
                 <th>Tracker Value</th>
-                <th>Delete</th>
+                <!-- <th>Delete</th> -->
             </tr>
         </thead>
         <tbody>
@@ -80,7 +80,7 @@
                 </td>
                 <td col_id="column_name">{{ row["column_name"] }}</td>
                 <td col_id="found_value">{{ row["found_value"] }}</td>
-                <td col_id="_id" class="remove-mark" onclick="deleteRow(this, {{ row['_id'] }})">&#10003;</td>
+                <!-- <td col_id="_id" class="remove-mark" onclick="deleteRow(this, {{ row['_id'] }})">&#10003;</td> -->
             </tr>
         {% endfor %}
         </tbody>
